@@ -220,6 +220,12 @@ extension CGContext
 
             drawOffset.x += point.x
             drawOffset.y += point.y
+            
+            let size = text.size(withAttributes: attributes)
+            let path = UIBezierPath(roundedRect: CGRect(x: drawOffset.x-4, y: drawOffset.y-2, width: size.width+8, height: 20), cornerRadius: 4)
+                        
+            UIColor(red: 3/255, green: 69/255, blue: 135/255, alpha: 1).setFill()
+            path.fill()
 
             (text as NSString).draw(at: drawOffset, withAttributes: attributes)
         }
