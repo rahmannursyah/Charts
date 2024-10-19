@@ -218,9 +218,25 @@ extension CGContext
                 drawOffset.y = -size.height * anchor.y
             }
 
-            drawOffset.x += point.x
-            drawOffset.y += point.y
+            /// Set our own drawoffset position if text is not empty but point is returning NAN
+            if point.x.isNaN && !text.isEmpty {
+                let size = text.size(withAttributes: attributes)
+                drawOffset.x = 0
+                /// To roughly center the drawOffset position
+                drawOffset.x = UIScreen.main.bounds.midX + (size.width / 2)
+            }
             
+            if point.y.isNaN && !text.isEmpty {
+                drawOffset.y = 0
+                drawOffset.y = 5
+            }
+            
+            else {
+                drawOffset.x += point.x
+                drawOffset.y += point.y
+            }
+            
+            /// Draw a rounded rectangle as the background view for the text
             let size = text.size(withAttributes: attributes)
             let path = UIBezierPath(roundedRect: CGRect(x: drawOffset.x-4, y: drawOffset.y-2, width: size.width+8, height: 20), cornerRadius: 4)
                         
